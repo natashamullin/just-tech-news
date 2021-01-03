@@ -51,20 +51,19 @@ User.init(
         }
     },
     {
-        hooks: {// set up beforeCreate lifecycle "hook" functionality
-            beforeCreate(userData) {
-                newUserData.password = await
-                bcrypt.hash(userData.password, 10);
-                return newUserData
+        hooks: { // set up beforeCreate lifecycle "hook" functionality
+            async beforeCreate(newUserData) {
+                newUserData.password = await bcrypt.hash(newUserData.password, 10);
+                return newUserData;
             },
             // set up beforeUpdate lifecycle "hook" functionality
-            async beforeUpdate(updateUserData) {
-                updateUserData.password = await bcrypt.hash(updateUserData.password, 10);
-                return updateUserData;
+            async beforeUpdate(updatedUserData) {
+                updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+                return updatedUserData;
             }
-
         },
-        //TABLE CONFIGURATION OPTIONS GO HERE TTPS://sequelize.org/v5/manual/models-definition.html#configuration))
+
+        //TABLE CONFIGURATION OPTIONS GO HERE HTTPS://sequelize.org/v5/manual/models-definition.html#configuration))
 
         // pass in our imported sequelize connection (the direct connection to our database)
         sequelize,
